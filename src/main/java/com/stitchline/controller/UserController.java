@@ -27,6 +27,5 @@ public class UserController {
     public UserDTO getUSer(@RequestBody String userName){
         System.out.println((userName));
         return service.getUser(userName);
-//        return "jbd";
     }
 }
