@@ -5,8 +5,11 @@ import com.stitchline.entity.Program;
 import com.stitchline.repo.ProgramRepo;
 import com.stitchline.service.ProgramService;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @author Ushan Shanilka <ushanshanilka80@gmail.com>
@@ -34,6 +37,12 @@ public class ProgramServiceImpl implements ProgramService {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public List<ProgramDTO> getAllPrograms() {
+        List<Program> all = repo.findAll();
+        return mapper.map(all,new TypeToken<List<ProgramDTO>>(){}.getType());
     }
 
 }
