@@ -6,8 +6,12 @@ import com.stitchline.repo.UserRepo;
 import com.stitchline.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 /**
@@ -15,14 +19,13 @@ import java.util.Optional;
  * @since 12/3/2021
  **/
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Autowired
     private ModelMapper mapper;
 
     @Autowired
     private UserRepo repo;
-
 
     @Override
     public boolean addUser(UserDTO dto) {
@@ -35,15 +38,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO getUser(String userName, String password) {
-        System.out.println(userName + " " + password);
+    public UserDTO getUser(String userName) {
+        System.out.println(userName);
         Optional<User> byId = repo.findById(userName);
         return mapper.map(byId,UserDTO.class);
     }
 
     @Override
-    public UserDTO findUserByUsernameAndPassword(String userName, String password) {
-        Optional<User> userByUsernameAndPassword = repo.findUserByUsernameAndPassword(userName, password);
+    public UserDTO findUserByUsernameAndPassword(String userName,String password) {
+        Optional<User> userByUsernameAndPassword = repo.findUserByUsernameAndPassword(userName,password);
         if (userByUsernameAndPassword.isPresent()){
             User user = userByUsernameAndPassword.get();
             return mapper.map(user,UserDTO.class);
@@ -52,4 +55,13 @@ public class UserServiceImpl implements UserService {
     }
 
 
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        Optional<User> userByUsernameAndPassword = repo.findUserByUsernameAndPassword(username, "1234");
+        if (userByUsernameAndPassword.isPresent()){
+            User user = userByUsernameAndPassword.get();
+            return new org.springframework.security.core.userdetails.User(user.getUsername(),user.getPassword(),new ArrayList<>());
+        }
+        return null;
+    }
 }
