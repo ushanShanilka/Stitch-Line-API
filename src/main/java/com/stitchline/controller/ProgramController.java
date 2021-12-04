@@ -13,6 +13,7 @@ import java.util.ArrayList;
  **/
 @RestController
 @RequestMapping("/api/v1/content")
+@CrossOrigin("http://localhost:4200")
 public class ProgramController {
 
     @Autowired

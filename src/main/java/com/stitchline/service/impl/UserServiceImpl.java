@@ -26,15 +26,29 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean addUser(UserDTO dto) {
-        repo.save(mapper.map(dto, User.class));
-        return true;
+        if (repo.existsById(dto.getUsername())){
+            return false;
+        }else {
+            repo.save(mapper.map(dto, User.class));
+            return true;
+        }
     }
 
     @Override
-    public UserDTO getUser(String userName) {
-        System.out.println(userName);
+    public UserDTO getUser(String userName, String password) {
+        System.out.println(userName + " " + password);
         Optional<User> byId = repo.findById(userName);
         return mapper.map(byId,UserDTO.class);
+    }
+
+    @Override
+    public UserDTO findUserByUsernameAndPassword(String userName, String password) {
+        Optional<User> userByUsernameAndPassword = repo.findUserByUsernameAndPassword(userName, password);
+        if (userByUsernameAndPassword.isPresent()){
+            User user = userByUsernameAndPassword.get();
+            return mapper.map(user,UserDTO.class);
+        }
+        return null;
     }
 
 

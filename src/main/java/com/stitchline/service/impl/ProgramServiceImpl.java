@@ -5,13 +5,8 @@ import com.stitchline.entity.Program;
 import com.stitchline.repo.ProgramRepo;
 import com.stitchline.service.ProgramService;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeToken;
-import org.modelmapper.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Optional;
 
 /**
  * @author Ushan Shanilka <ushanshanilka80@gmail.com>
@@ -36,6 +31,7 @@ public class ProgramServiceImpl implements ProgramService {
     public boolean updateProgram(ProgramDTO dto) {
         if (repo.existsById(dto.getName())){
             repo.save(mapper.map(dto,Program.class));
+            return true;
         }
         return false;
     }
