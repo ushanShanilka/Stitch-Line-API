@@ -13,4 +13,5 @@ public interface ProgramService {
     boolean addProgram(ProgramDTO dto);
     boolean updateProgram(ProgramDTO dto);
     List<ProgramDTO> getAllPrograms();
+    List<ProgramDTO> findProgram(String startDate, String endDate);
 }

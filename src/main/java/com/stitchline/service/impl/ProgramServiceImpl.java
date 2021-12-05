@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author Ushan Shanilka <ushanshanilka80@gmail.com>
@@ -43,6 +44,12 @@ public class ProgramServiceImpl implements ProgramService {
     public List<ProgramDTO> getAllPrograms() {
         List<Program> all = repo.findAll();
         return mapper.map(all,new TypeToken<List<ProgramDTO>>(){}.getType());
+    }
+
+    @Override
+    public List<ProgramDTO> findProgram(String startDate, String endDate) {
+        List<Program> programs = repo.findAllByStartDateAndEndDate(startDate, endDate);
+        return mapper.map(programs,new TypeToken<List<ProgramDTO>>(){}.getType());
     }
 
 }

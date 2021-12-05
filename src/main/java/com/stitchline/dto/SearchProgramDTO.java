@@ -6,14 +6,12 @@ import lombok.NoArgsConstructor;
 
 /**
  * @author Ushan Shanilka <ushanshanilka80@gmail.com>
- * @since 12/3/2021
+ * @since 12/5/2021
  **/
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
-public class ProgramDTO {
-    private String name;
-    private String description;
+public class SearchProgramDTO {
     private String startDate;
     private String endDate;
 }

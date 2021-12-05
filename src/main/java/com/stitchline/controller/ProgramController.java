@@ -1,6 +1,7 @@
 package com.stitchline.controller;
 
 import com.stitchline.dto.ProgramDTO;
+import com.stitchline.dto.SearchProgramDTO;
 import com.stitchline.service.ProgramService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -35,5 +36,12 @@ public class ProgramController {
         System.out.println(allPrograms);
         List<ProgramDTO> allPrograms1 = service.getAllPrograms();
         return allPrograms1;
+    }
+
+
+    @GetMapping
+    public List<ProgramDTO> getProgramBetweenDate(@RequestBody SearchProgramDTO dto){
+        List<ProgramDTO> programByStart_dateAndEnd_date = service.findProgram(dto.getStartDate(), dto.getEndDate());
+        return programByStart_dateAndEnd_date;
     }
 }

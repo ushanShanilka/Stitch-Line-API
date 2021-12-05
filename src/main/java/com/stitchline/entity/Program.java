@@ -18,6 +18,6 @@ public class Program {
     @Id
     private String name;
     private String description;
-    private String start_date;
-    private String end_date;
+    private String startDate;
+    private String endDate;
 }
